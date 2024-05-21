@@ -5,8 +5,12 @@ from fastapi_pagination import add_pagination
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.gzip import GZipMiddleware
 from fastapi_limiter import FastAPILimiter
+
+from common.exception.exception import register_exception
 from core.conf import settings
 from core.path_conf import STATIC_DIR
+from database.db_redis import redis_client
+from middleware.access_middle import AccessMiddleware
 
 
 @asynccontextmanager
@@ -54,6 +58,7 @@ def register_app():
     register_exception(app)
 
     return app
+
 
 def register_static_file(app: FastAPI):
     """
